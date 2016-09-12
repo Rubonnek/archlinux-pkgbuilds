@@ -1,0 +1,79 @@
+# Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+
+pkgname='sqlite3secure'
+_sqlite_srcver=3140200
+_docver=${_srcver}
+#_docver=3080001
+pkgver=3.4.0
+pkgrel=1
+pkgdesc="wxsqlite3 is an SQLite3 encryption extension which has been compiled along with SQLite3 for an interactive shell."
+arch=('i686' 'x86_64')
+license=('custom:Public Domain' 'custom:wxWindows Library Licence, Version 3.1')
+url="https://github.com/utelle/wxsqlite3"
+makedepends=('tcl' 'readline')
+source=("http://sqlite.org/2016/sqlite-amalgamation-${_sqlite_srcver}.zip"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codec.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codec.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codecext.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/csv.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/extensionfunctions.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/list"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/rijndael.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/rijndael.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sha2.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sha2.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sqlite3secure.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/userauth.c"
+"sqlite3license.txt"
+"wxsqlitelicense.txt"
+)
+options=('!emptydirs' '!makeflags') # json extensions breaks parallel build
+sha1sums=(
+'716f8dbaf8e6a0b460845ae9df394285d0f3e88f'
+'3029fbaff444ebfe48ea9fb46564f0cada93bcab'
+'21e5fd754c132e693ef61ecdc8c4cd497483b67e'
+'252089b44c26f5c81ce20f196418255340bd5bb8'
+'17178cad730c3355958d8233047bcded860530f5'
+'26c2b8a56ff1a7971540e1e50ef1ffb50638e29c'
+'634dda218496da90f8159cede4bac95d79b03ac9'
+'bb8b2c082749b7c8f89ce0a74d7362a8d337a52f'
+'365e8e2d3f1a71686f21486a3a6e11f676ec8b10'
+'0067c47317970cc662b1a1a73ad90bc75d550e35'
+'59c2e4e813fd80719d99882f3d1c838b63ebb4a8'
+'128a466f8f4b5857cae81d34fc8616cb7d92f9c4'
+'268214c757cd87a472aa9bd4e8d28ccaa97bb9ea'
+'f34f6daa4ab3073d74e774aad21d66878cf26853'
+'52e955caf20624f431031716760ec3ba3c29a4ab'
+)
+
+build() {
+	export CPPFLAGS="$CPPFLAGS  -DHAVE_READLINE \
+		-DSQLITE_CORE \
+		-DSQLITE_ENABLE_COLUMN_METADATA \
+		-DSQLITE_ENABLE_COLUMN_METADATA=1 \
+		-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
+		-DSQLITE_ENABLE_FTS3 \
+		-DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+		-DSQLITE_ENABLE_FTS4 \
+		-DSQLITE_ENABLE_FTS5 \
+		-DSQLITE_ENABLE_JSON1 \
+		-DSQLITE_ENABLE_RTREE \
+		-DSQLITE_ENABLE_UNLOCK_NOTIFY \
+		-DSQLITE_SECURE_DELETE
+	-DSQLITE_SECURE_DELETE \
+		-DTHREADSAFE=1 \
+		-DSQLITE_ENABLE_COLUMN_METADATA=1 \
+		-DSQLITE_HAS_CODEC  \
+		$CXXFLAGS"
+
+	# Uncomment to use 256-bit AES encryption instead. 							 
+	#export CPPFLAGS+="-DCODEC_TYPE=CODEC_TYPE_AES256"
+
+	cd sqlite-amalgamation-${_sqlite_srcver}
+	gcc -Wall  -ldl  -lpthread  -lm  -ledit shell.c sqlite3secure.c \
+		-o sqlite3secure
+}
+
+package() {
+	install -Dm 755 ${srcdir}/sqlite-amalgamation-${_sqlite_srcver}/sqlite3secure ${pkgdir}/usr/bin/sqlite3secure
+}

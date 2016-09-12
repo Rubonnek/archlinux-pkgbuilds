@@ -1,0 +1,28 @@
+# Maintainer: Etzos <supercodingmonkey @ gmail.com>
+# Contributer: Gordin <9ordin @t gmail dot com>
+# Contributer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+
+pkgname=texturepacker
+pkgver=4.2.2
+pkgrel=1
+pkgdesc="Sprite sheet creator and image optimizer"
+arch=('x86_64')
+url="http://www.texturepacker.com"
+license=('custom:texturepacker')
+install='texturepacker.install'
+depends=('glib2' 'hicolor-icon-theme' 'desktop-file-utils' 'shared-mime-info')
+source=("http://www.codeandweb.com/download/texturepacker/${pkgver}/TexturePacker-${pkgver}-ubuntu64.deb")
+md5sums=('SKIP')
+
+build() {
+    ar -xv "TexturePacker-${pkgver}-ubuntu64.deb"
+    tar -xvf data.tar.xz
+}
+
+package() {
+    # Program
+    mv ${srcdir}/usr ${pkgdir}
+    # License
+    install -Dm644 "${pkgdir}/usr/share/texturepacker/documents/LicenseAgreement.html" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LicenseAgreement.html"
+}
