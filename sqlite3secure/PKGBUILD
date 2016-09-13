@@ -59,9 +59,8 @@ prepare(){
 }
 
 build() {
-	export CPPFLAGS="$CPPFLAGS  -DHAVE_READLINE \
+	export CPPFLAGS="$CPPFLAGS -DHAVE_READLINE \
 		-DSQLITE_CORE \
-		-DSQLITE_ENABLE_COLUMN_METADATA \
 		-DSQLITE_ENABLE_COLUMN_METADATA=1 \
 		-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
 		-DSQLITE_ENABLE_FTS3 \
@@ -71,18 +70,16 @@ build() {
 		-DSQLITE_ENABLE_JSON1 \
 		-DSQLITE_ENABLE_RTREE \
 		-DSQLITE_ENABLE_UNLOCK_NOTIFY \
-		-DSQLITE_SECURE_DELETE
-	-DSQLITE_SECURE_DELETE \
-		-DTHREADSAFE=1 \
-		-DSQLITE_ENABLE_COLUMN_METADATA=1 \
 		-DSQLITE_HAS_CODEC  \
+		-DSQLITE_SECURE_DELETE \
+		-DTHREADSAFE=1 \
 		$CXXFLAGS"
 
 	# Uncomment to use 256-bit AES encryption instead. 							 
 	#export CPPFLAGS+="-DCODEC_TYPE=CODEC_TYPE_AES256"
 
 	cd sqlite-amalgamation-${_sqlite_srcver}
-	gcc -Wall  -ldl  -lpthread  -lm  -ledit shell.c sqlite3secure.c \
+	gcc ${CPPFLAGS} -Wall  -ldl  -lpthread  -lm -ledit shell.c sqlite3secure.c \
 		-o sqlite3secure
 }
 
