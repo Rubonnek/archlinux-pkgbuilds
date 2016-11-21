@@ -1,10 +1,10 @@
 # Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
 
 pkgname='sqlite3secure'
-_sqlite_srcver=3140200
+_sqlite_srcver=3150100
 _docver=${_srcver}
 #_docver=3080001
-pkgver=3.4.0
+pkgver=3.15.1
 pkgrel=1
 pkgdesc="wxsqlite3 is an SQLite3 encryption extension which has been compiled along with SQLite3 for an interactive shell."
 arch=('i686' 'x86_64')
@@ -12,26 +12,26 @@ license=('custom:Public Domain' 'custom:wxWindows Library Licence, Version 3.1')
 url="https://github.com/utelle/wxsqlite3"
 makedepends=('tcl' 'readline')
 source=("http://sqlite.org/2016/sqlite-amalgamation-${_sqlite_srcver}.zip"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codec.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codec.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/codecext.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/csv.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/extensionfunctions.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/rijndael.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/rijndael.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sha2.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sha2.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/sqlite3secure.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.0/sqlite3/secure/src/userauth.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codec.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codec.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codecext.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/csv.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/extensionfunctions.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/rijndael.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/rijndael.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sha2.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sha2.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sqlite3secure.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/userauth.c"
 "sqlite3license.txt"
 "wxsqlitelicense.txt"
 )
 options=('!emptydirs' '!makeflags') # json extensions breaks parallel build
 sha1sums=(
-'716f8dbaf8e6a0b460845ae9df394285d0f3e88f'
+'f031263abcc738daf76561c1c1934b46fe6664b2'
 '3029fbaff444ebfe48ea9fb46564f0cada93bcab'
 '21e5fd754c132e693ef61ecdc8c4cd497483b67e'
-'252089b44c26f5c81ce20f196418255340bd5bb8'
+'503eda5fbefbfdf167127f747c097231da5513f1'
 '17178cad730c3355958d8233047bcded860530f5'
 '26c2b8a56ff1a7971540e1e50ef1ffb50638e29c'
 'bb8b2c082749b7c8f89ce0a74d7362a8d337a52f'
