@@ -5,7 +5,7 @@ _sqlite_srcver=3150100
 _docver=${_srcver}
 #_docver=3080001
 pkgver=3.15.1
-pkgrel=2
+pkgrel=1
 pkgdesc="wxsqlite3 is an SQLite3 encryption extension which has been compiled along with SQLite3 for an interactive shell."
 arch=('i686' 'x86_64')
 license=('custom:Public Domain' 'custom:wxWindows Library Licence, Version 3.1')
@@ -60,20 +60,23 @@ prepare(){
 
 build() {
 	export CPPFLAGS="$CPPFLAGS -DHAVE_READLINE \
+		-DCODEC_TYPE=CODEC_TYPE_AES128 \
 		-DSQLITE_CORE \
 		-DSQLITE_ENABLE_COLUMN_METADATA \
-		-DWXSQLITE3_HAVE_METADATA \
-		-DSQLITE_ENABLE_DBSTAT_VTAB \
+		-DSQLITE_ENABLE_COLUMN_METADATA=1 \
+		-DSQLITE_ENABLE_DBSTAT_VTAB=1 \
 		-DSQLITE_ENABLE_FTS3 \
-		-DSQLITE_ENABLE_FTS3_TOKENIZER \
+		-DSQLITE_ENABLE_FTS3_PARENTHESIS \
 		-DSQLITE_ENABLE_FTS4 \
 		-DSQLITE_ENABLE_FTS5 \
 		-DSQLITE_ENABLE_JSON1 \
 		-DSQLITE_ENABLE_RTREE \
 		-DSQLITE_ENABLE_UNLOCK_NOTIFY \
-		-DSQLITE_HAS_CODEC  \
+		-DSQLITE_HAS_CODEC \
 		-DSQLITE_SECURE_DELETE \
-		-DTHREADSAFE \
+		-DSQLITE_SOUNDEX \
+		-DTHREADSAFE=1 \
+		-DWXSQLITE3_HAVE_METADATA \
 		$CXXFLAGS"
 
 	# Uncomment to use 256-bit AES encryption instead. 							 
