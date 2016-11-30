@@ -59,6 +59,8 @@ prepare(){
 }
 
 build() {
+	#Note: -DCODEC_TYPE=CODEC_TYPE_AES128 is enabled by default but we
+	#		explicitly define CODEC_TYPE that way in order to avoid future headaches
 	export CPPFLAGS="$CPPFLAGS -DHAVE_READLINE \
 		-DCODEC_TYPE=CODEC_TYPE_AES128 \
 		-DSQLITE_CORE \
