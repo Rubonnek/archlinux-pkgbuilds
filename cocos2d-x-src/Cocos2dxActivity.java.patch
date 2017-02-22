@@ -1,0 +1,25 @@
+From a9a24dbbc2d1083adc9fed2d92e532dff7ebbaf9 Mon Sep 17 00:00:00 2001
+From: "Wilson E. Alvarez" <wilson.e.alvarez1@gmail.com>
+Date: Wed, 22 Feb 2017 17:52:47 -0400
+Subject: [PATCH] dummy
+
+---
+ .../platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java    | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java b/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
+index 808cba4..50ea50a 100644
+--- a/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
++++ b/cocos2d/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
+@@ -172,6 +172,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
+                     EGL10.EGL_ALPHA_SIZE, configAttribs[3],
+                     EGL10.EGL_DEPTH_SIZE, configAttribs[4],
+                     EGL10.EGL_STENCIL_SIZE,configAttribs[5],
++                    EGL10.EGL_SAMPLE_BUFFERS,1,
++                    EGL10.EGL_SAMPLES,0,
+                     EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
+                     EGL10.EGL_NONE
+             };
+-- 
+2.11.1
+

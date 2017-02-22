@@ -1,0 +1,18 @@
+--- /opt/cocos2d-x-git/templates/cpp-template-default/CMakeLists.txt	2017-02-16 12:20:34.441798301 -0400
++++ CMakeLists.txt	2017-02-22 16:14:44.797021901 -0400
+@@ -74,10 +74,11 @@ else()
+   if(CMAKE_BUILD_TYPE MATCHES Debug)
+     ADD_DEFINITIONS(-DCOCOS2D_DEBUG=1)
+   endif()
+-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
+-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
++  ADD_DEFINITIONS(-D_FORTIFY_SOURCE=2)
++  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -O2 -pipe -fstack-protector-strong")
++  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ldl")
++  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O2 -pipe -fstack-protector-strong")
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ldl -std=c++11 -Wno-deprecated-declarations -Wno-reorder -O2 -pipe -fstack-protector-strong")
+   if(CLANG)
+     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+   endif()
