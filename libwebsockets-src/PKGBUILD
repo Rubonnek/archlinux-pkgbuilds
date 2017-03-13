@@ -1,0 +1,25 @@
+# Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+# Contributor: Jingbei Li <i@jingbei.li>
+
+_gitname=libwebsockets
+pkgname=libwebsockets-src
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="A lightweight pure C library built to use minimal CPU and memory resources, and provide fast throughput in both directions."
+arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+url="https://libwebsockets.org"
+license=('LGPL')
+conflicts=('libwebsockets-src')
+provides=('libwebsockets-src')
+replaces=('libwebsockets-src')
+source=("https://github.com/warmcat/${_gitname}/archive/v${pkgver}.tar.gz")
+sha256sums=('96183cbdfcd6e6a3d9465e854a924b7bfde6c8c6d3384d6159ad797c2e823b4d')
+
+build() {
+	:
+}
+
+package() {
+	mkdir -p "$pkgdir/opt"
+	mv "${srcdir}/${_gitname}-${pkgver}" "$pkgdir"/opt/libwebsockets
+}
