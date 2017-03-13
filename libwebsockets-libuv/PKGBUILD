@@ -17,11 +17,6 @@ replaces=('libwebsockets')
 source=("https://github.com/warmcat/${_gitname}/archive/v${pkgver}.tar.gz")
 sha256sums=('96183cbdfcd6e6a3d9465e854a924b7bfde6c8c6d3384d6159ad797c2e823b4d')
 
-#pkgver() {
-#    cd $_gitname
-#    echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
-#}
-
 build() {
 	cd "${srcdir}/${_gitname}-${pkgver}"
 	rm -rf build
