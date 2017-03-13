@@ -14,7 +14,7 @@ license=('LGPL')
 conflicts=('libwebsockets')
 provides=('libwebsockets')
 replaces=('libwebsockets')
-source=("https://github.com/warmcat/libwebsockets/archive/v2.1.1.tar.gz")
+source=("https://github.com/warmcat/${_gitname}/archive/v${pkgver}.tar.gz")
 sha256sums=('96183cbdfcd6e6a3d9465e854a924b7bfde6c8c6d3384d6159ad797c2e823b4d')
 
 #pkgver() {
