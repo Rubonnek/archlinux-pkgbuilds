@@ -137,7 +137,6 @@ package() {
 	install -Dm755 "$_appname.sh" "$pkgdir/etc/profile.d/$_appname.sh"
 	install -Dm755 "$_appname.csh" "$pkgdir/etc/profile.d/$_appname.csh"
 
-
 	# =======  POSSIBLE PATCHES TO REMOVE (they were included in the upstream version): ========
 
 	# Layer has been deprecated. Update the C++ templates: https://github.com/cocos2d/cocos2d-x/pull/17048
@@ -159,6 +158,25 @@ package() {
 
 	# Add Arch Linux only optimization flags (these need a recent version of the GNU C Compiler):
 	patch -s "$srcdir"/$_appname-$pkgver/templates/cpp-template-default/CMakeLists.txt CMakeLists.txt.patch
+
+	# TODO: Also add the following options to the CMakeLists.txt patch for disabling/enabling libraries
+
+		# Uncomment to disable compiling/linking the following:
+		#set(USE_CHIPMUNK OFF CACHE BOOL "Use chipmunk for physics library") # ON by default
+		#set(USE_BOX2D ON CACHE BOOL "Use box2d for physics library") # OFF by default
+		#set(USE_BULLET OFF CACHE BOOL "Use bullet for physics3d library") # ON by default
+		#set(USE_RECAST OFF CACHE BOOL "Use Recast for navigation mesh")
+		#set(USE_WEBP OFF CACHE BOOL "Use WebP codec")
+		#set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries")
+		#set(DEBUG_MODE OFF CACHE BOOL "Debug or release?")
+		#set(BUILD_EXTENSIONS OFF CACHE BOOL "Build extension library")
+		#set(BUILD_EDITOR_SPINE OFF CACHE BOOL "Build editor support for spine")
+		#set(BUILD_EDITOR_COCOSTUDIO OFF CACHE BOOL "Build editor support for cocostudio")
+		#set(BUILD_EDITOR_COCOSBUILDER OFF CACHE BOOL "Build editor support for cocosbuilder")
+		#set(BUILD_BOX2D OFF CACHE BOOL "Build box2d external without using it for physics library")
+		#set(USE_PREBUILT_LIBS OFF CACHE BOOL "Use prebuilt libraries in external directory")
+		#set(USE_SOURCES_EXTERNAL OFF CACHE BOOL "Use sources in external directory (automatically ON when USE_PREBUILT_LIBS is)")
+
 
 	# Switch C++ multiline string literal to the STRINGIFY macro which uses less memory. See https://github.com/cocos2d/cocos2d-x/pull/16742
 	# TL;DR: For smoother development, using the C++ multiline string literal is convenient, however the STRINGIFY macro defined at ccShaders.cpp uses less memory.
@@ -204,7 +222,7 @@ package() {
 	patch -s "$srcdir"/$_appname-$pkgver/cocos/renderer/ccShader_UI_Gray.frag ccShader_UI_Gray.frag.patch
 
 
-	# Engine tweaks -- must enabled by the users. These change the behaviour of the engine in certain areas
+	# Engine tweaks that must be adjusted on a user basis -- must be enabled by the users. These change the behaviour of the engine in certain areas
 
 	# Disable antialiasing globally for higher performance in general.
 	# Pixel art looks better with this disabled.
@@ -214,15 +232,15 @@ package() {
 
 	# Disabled Multi-Sample Anti-Aliasing (MSAA) for higher performance
 	if [[ -n $COCOS2D_X_DISABLE_MSAA ]]; then
-	# For Android
-	patch -s "$srcdir"/$_appname-$pkgver/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java Cocos2dxActivity.java.patch
+		# For Android
+		patch -s "$srcdir"/$_appname-$pkgver/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java Cocos2dxActivity.java.patch
 
-	# For Linux, Mac and Windows:
-	patch -s "$srcdir"/$_appname-$pkgver/cocos/platform/desktop/CCGLViewImpl-desktop.cpp CCGLViewImpl-desktop.cpp.patch
+		# For Linux, Mac and Windows:
+		patch -s "$srcdir"/$_appname-$pkgver/cocos/platform/desktop/CCGLViewImpl-desktop.cpp CCGLViewImpl-desktop.cpp.patch
 
-	#iOS -- Not really necessary. Cocos2D-X, according to the documentation, requires iOS 7+ which are fairly new devices and disabling MSAA on those devices might not even increase performance. See http://gamesfromwithin.com/trying-out-multisampling-on-ios
-	# There's some documentation here on working with iOS MSAA: https://developer.apple.com/library/content/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW12
-	# I might try implementing a patch for disabling MSAA on if I may need the performance boost. Leaving it on seems like the way to go for now.
+		#iOS -- Not really necessary. Cocos2D-X, according to the documentation, requires iOS 7+ which are fairly new devices and disabling MSAA on those devices might not even increase performance. See http://gamesfromwithin.com/trying-out-multisampling-on-ios
+		# There's some documentation here on working with iOS MSAA: https://developer.apple.com/library/content/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW12
+		# I might try implementing a patch for disabling MSAA on if I may need the performance boost. Leaving it on seems like the way to go for now.
 	fi
 
 	if [[ -n $COCOS2D_X_EXPERIMENTAL_FEATURES ]]; then
