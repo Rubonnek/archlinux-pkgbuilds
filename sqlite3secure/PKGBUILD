@@ -1,47 +1,50 @@
 # Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
 
 pkgname='sqlite3secure'
-_sqlite_srcver=3150100
-_docver=${_srcver}
-#_docver=3080001
-pkgver=3.15.1
+_sqlite_srcver=3180000
+pkgver=3.18
 pkgrel=1
 pkgdesc="wxsqlite3 is an SQLite3 encryption extension which has been compiled along with SQLite3 for an interactive shell."
 arch=('i686' 'x86_64')
 license=('custom:Public Domain' 'custom:wxWindows Library Licence, Version 3.1')
 url="https://github.com/utelle/wxsqlite3"
 makedepends=('tcl' 'readline')
-source=("http://sqlite.org/2016/sqlite-amalgamation-${_sqlite_srcver}.zip"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codec.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codec.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/codecext.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/csv.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/extensionfunctions.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/rijndael.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/rijndael.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sha2.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sha2.h"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/sqlite3secure.c"
-"https://raw.githubusercontent.com/utelle/wxsqlite3/v3.4.1/sqlite3/secure/src/userauth.c"
+
+# SQLite and wxSQLite versions are tied. Update these variables to the right versions as we update the PKGBUILD:
+_year=2017
+_wxsqlite_version="v3.5.3"
+
+source=("http://sqlite.org/${_year}/sqlite-amalgamation-${_sqlite_srcver}.zip"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/codec.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/codec.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/codecext.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/csv.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/extensionfunctions.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/rijndael.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/rijndael.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/sha2.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/sha2.h"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/sqlite3secure.c"
+"https://raw.githubusercontent.com/utelle/wxsqlite3/${_wxsqlite_version}/sqlite3/secure/src/userauth.c"
 "sqlite3license.txt"
 "wxsqlitelicense.txt"
 )
 options=('!emptydirs' '!makeflags') # json extensions breaks parallel build
-sha1sums=(
-'f031263abcc738daf76561c1c1934b46fe6664b2'
-'3029fbaff444ebfe48ea9fb46564f0cada93bcab'
-'21e5fd754c132e693ef61ecdc8c4cd497483b67e'
-'503eda5fbefbfdf167127f747c097231da5513f1'
-'17178cad730c3355958d8233047bcded860530f5'
-'26c2b8a56ff1a7971540e1e50ef1ffb50638e29c'
-'bb8b2c082749b7c8f89ce0a74d7362a8d337a52f'
-'365e8e2d3f1a71686f21486a3a6e11f676ec8b10'
-'0067c47317970cc662b1a1a73ad90bc75d550e35'
-'59c2e4e813fd80719d99882f3d1c838b63ebb4a8'
-'128a466f8f4b5857cae81d34fc8616cb7d92f9c4'
-'268214c757cd87a472aa9bd4e8d28ccaa97bb9ea'
-'f34f6daa4ab3073d74e774aad21d66878cf26853'
-'52e955caf20624f431031716760ec3ba3c29a4ab'
+sha256sums=(
+"1cfb91106650a12840e107db29f2ec4afe3d7f9dc5936770ef53bc3eb6387b6e"
+"e423af8d7a4df819c1dd9e9fc0a0bc32ce077ba892ac55134bd1d4eb7c5b4688"
+"adaaf5ed801b6adeff38ac69e99b8a84cc8bdbc4012559b9ed85a2c9f796302e"
+"20d0c42485396f17c4a3ac5411b77a5dcb8cd516ad00682b1e183150e4260254"
+"1acdcd41484349f667568b36d511ff4832107cf5d932f69478c570965247bad0"
+"818cebdde638c5e5eb2404cebeb0be6c605585218667b732efae6de30f478c26"
+"6b5dc3bcc8f6fd41d4af0cf471dca0f816bd42242ad1fc59bff6119f8fddcd6d"
+"e9bf346d5b61bb3201f0993f178a5c226ffd15a825d7a7537524a5a983c0ccc7"
+"0be45ed49d66b9e18b0da0685d8f052bc1d139b6ce8da7c6f9c6c181ca594be8"
+"856bbb9991cd526a1c973f6307270abae7c15529e3a9b773474754bd1d69e6b4"
+"f4c846d96f3e03397d9b73660360fd6263149226556f313a139f8aba56c2603f"
+"214eda752756b33b32550203ff820dc673469a68229797b0da6f5fec90e66fa5"
+"4e57d9ac979f1c9872e69799c2597eeef4c6ce7224f3ede0bf9dc8d217b1e65d"
+"655a2d832711d5e8f4eb318c56ca01c076937f05c0f9b532714e57811f4e9e4a"
 )
 
 prepare(){
