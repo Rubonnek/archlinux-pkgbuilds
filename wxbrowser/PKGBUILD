@@ -9,7 +9,7 @@ arch=('x86_64' 'i686')
 url="https://github.com/acwn/wxBrowser"
 license=('custom')
 depends=('pixman' 'curl' 'giflib' 'zlib' 'libpng' 'libjpeg-turbo' 'tinyxml' 'freetype2' 'libwebp')
-makedepends=('cmake' 'git')
+makedepends=('cmake' 'git' 'boost')
 conflicts=("wxbrowser-git" "wxbrowser-gpl")
 source=("git+https://github.com/acwn/wxBrowser")
 sha256sums=( 'SKIP' )
@@ -17,11 +17,12 @@ sha256sums=( 'SKIP' )
 build() {
   cd "$srcdir"/${_pkgname}/trunk
 
-  autoscan
-  aclocal
-  autoconf
-  autoheader
-  automake -a
+  #autoscan
+  #aclocal
+  #autoconf
+  #autoheader
+  #automake -a
+  autoreconf -i
   ./configure
   make $MAKEFLAGS
 }
