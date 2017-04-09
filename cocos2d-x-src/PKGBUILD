@@ -177,6 +177,9 @@ package() {
 		#set(USE_PREBUILT_LIBS OFF CACHE BOOL "Use prebuilt libraries in external directory")
 		#set(USE_SOURCES_EXTERNAL OFF CACHE BOOL "Use sources in external directory (automatically ON when USE_PREBUILT_LIBS is)")
 
+	# TODO: 
+	# Add the WebSocket memory leak patch if it's not included in v3.15. See: https://github.com/cocos2d/cocos2d-x/pull/17653
+
 
 	# Switch C++ multiline string literal to the STRINGIFY macro which uses less memory. See https://github.com/cocos2d/cocos2d-x/pull/16742
 	# TL;DR: For smoother development, using the C++ multiline string literal is convenient, however the STRINGIFY macro defined at ccShaders.cpp uses less memory.
