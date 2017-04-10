@@ -1,5 +1,5 @@
 # Mantainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
-# Submitter: Samuel FORGIONE <samuel.forgione@gmail.com>
+# Previous Maintainer: Samuel FORGIONE <samuel.forgione@gmail.com>
 
 _appname=cocos2d-x
 pkgname=cocos2d-x-src
@@ -180,6 +180,8 @@ package() {
 	# TODO: 
 	# Add the WebSocket memory leak patch if it's not included in v3.15. See: https://github.com/cocos2d/cocos2d-x/pull/17653
 
+	# TODO: 
+	# Add the label memory leak patch if not included: https://github.com/cocos2d/cocos2d-x/pull/17670
 
 	# Switch C++ multiline string literal to the STRINGIFY macro which uses less memory. See https://github.com/cocos2d/cocos2d-x/pull/16742
 	# TL;DR: For smoother development, using the C++ multiline string literal is convenient, however the STRINGIFY macro defined at ccShaders.cpp uses less memory.
