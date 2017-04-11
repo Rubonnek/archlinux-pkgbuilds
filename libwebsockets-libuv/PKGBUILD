@@ -16,6 +16,7 @@ provides=('libwebsockets')
 replaces=('libwebsockets')
 source=("https://github.com/warmcat/${_gitname}/archive/v${pkgver}.tar.gz")
 sha256sums=('96183cbdfcd6e6a3d9465e854a924b7bfde6c8c6d3384d6159ad797c2e823b4d')
+#options+=(!strip)
 
 build() {
 	cd "${srcdir}/${_gitname}-${pkgver}"
@@ -23,6 +24,7 @@ build() {
 	mkdir build
 	cd build
 	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLWS_WITH_LIBUV=ON ..
+	#cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLWS_WITH_LIBUV=ON ..
 	make $MAKEFLAGS
 }
 
