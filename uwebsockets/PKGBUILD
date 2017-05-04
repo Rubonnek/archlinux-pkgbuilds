@@ -18,14 +18,19 @@ source=("${url}/archive/v${pkgver}.tar.gz")
 sha256sums=('22f8e1a69ffec8c0e50251fe34d7788330af241b7fd92b5a3542f57884fcf2f8')
 #options+=(!strip)
 
-build() {
+build()
+{
 	cd "${srcdir}/${_gitname}-${pkgver}"
 	make $MAKEFLAGS
 }
 
-package() {
-
+package()
+{
+	# Add the compiled library:
 	mkdir -p "${pkgdir}/usr/lib"
-	cp "${srcdir}/${_gitname}-${pkgver}/libuWS.so" "${pkgdir}/usr/lib"
+	mv "${srcdir}/${_gitname}-${pkgver}/libuWS.so" "${pkgdir}/usr/lib"
 
+	# Add the headers:
+	mkdir -p "${pkgdir}/usr/include/uWS"
+	mv "${srcdir}/${_gitname}-${pkgver}/src/"*.h "${pkgdir}/usr/include/uWS"
 }
