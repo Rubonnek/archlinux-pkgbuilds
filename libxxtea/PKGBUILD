@@ -1,0 +1,38 @@
+# Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+
+_gitname=libxxtea-cocos2d-x
+pkgname=${_gitname,,}
+pkgver=1.0
+pkgrel=1
+pkgdesc="µWS is one of the most lightweight, efficient & scalable WebSocket & HTTP server implementations available"
+#arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+arch=('i686' 'x86_64')
+url="https://github.com/Rubonnek/${_gitname,,}"
+depends=('openssl' 'make' 'zlib' 'libuv')
+makedepends=('cmake')
+license=('PHP')
+conflicts=('xxtea')
+provides=('xxtea')
+replaces=('xxtea')
+source=("${url}/archive/v${pkgver}.tar.gz")
+sha256sums=('e479724877b9300c7d4e0eedc029a24a6d80d7f3638db6a6acc64c49f357988f')
+#options+=(!strip)
+
+build()
+{
+	cd "${srcdir}/${_gitname}-${pkgver}"
+	mkdir -p build && cd build
+	cmake ..
+	make $MAKEFLAGS
+}
+
+package()
+{
+	# Add the compiled library:
+	mkdir -p "${pkgdir}/usr/lib"
+	mv "${srcdir}/${_gitname}-${pkgver}/build/libxxtea.so" "${pkgdir}/usr/lib"
+
+	# Add the headers:
+	mkdir -p "${pkgdir}/usr/include"
+	mv "${srcdir}/${_gitname}-${pkgver}/src/"*.h "${pkgdir}/usr/include"
+}
