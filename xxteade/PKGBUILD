@@ -1,0 +1,29 @@
+# Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+
+pkgver=1.0
+pkgrel=1
+pkgdesc="Command-line tool for encrypting/decrypting files using the xxtea library. Made for handling encrypted files with Cocos2D-X"
+#arch=('i686' 'x86_64' 'armv6h' 'armv7h')
+arch=('i686' 'x86_64')
+#depends=('openssl' 'make' 'zlib' 'libuv')
+#makedepends=('cmake')
+license=('PHP')
+conflicts=('xxteade')
+provides=('xxteade')
+replaces=('xxteade')
+source=("main.cpp")
+sha256sums=('d341cc52dd8f34c6d9d21d8a4c576e6ec21d42c02d92b5093893b0b74b69e230')
+#options+=(!strip)
+
+build()
+{
+	cd "${srcdir}"
+	g++ main.cpp -lxxtea -o xxteade
+}
+
+package()
+{
+	# Add the compiled program:
+	mkdir -p "${pkgdir}/usr/bin"
+	mv "xxteade" "${pkgdir}/usr/bin"
+}
