@@ -13,7 +13,7 @@ conflicts=('xxteade')
 provides=('xxteade')
 replaces=('xxteade')
 source=("main.cpp")
-sha256sums=('d341cc52dd8f34c6d9d21d8a4c576e6ec21d42c02d92b5093893b0b74b69e230')
+sha256sums=('484ec9f50e784c4cf1cf5e6e3e8912fe11a88c66bc1287fefc09668540c69f2f')
 #options+=(!strip)
 
 build()
