@@ -1,5 +1,6 @@
 # Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
 
+pkgname="xxteade"
 pkgver=1.0
 pkgrel=1
 pkgdesc="Command-line tool for encrypting/decrypting files using the xxtea library. Made for handling encrypted files with Cocos2D-X"
