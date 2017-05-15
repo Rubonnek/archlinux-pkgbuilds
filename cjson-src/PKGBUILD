@@ -1,9 +1,8 @@
 # Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
-# Contributor: Jingbei Li <i@jingbei.li>
 
 _gitname=cJSON
 pkgname=${_gitname,,}-src
-pkgver=1.4.5
+pkgver=1.5.2
 pkgrel=1
 pkgdesc="A lightweight pure C library built to use minimal CPU and memory resources, and provide fast throughput in both directions."
 arch=('i686' 'x86_64' 'armv6h' 'armv7h')
@@ -13,7 +12,7 @@ conflicts=('cjson-src')
 provides=('cjson-src')
 replaces=('cjson-src')
 source=("https://github.com/DaveGamble/${_gitname}/archive/v${pkgver}.tar.gz")
-sha256sums=('3d0a61f2023749a6b813cadc713234a2ea393cf5482d910cf91584f13a82af13')
+sha256sums=('6d1482c1b492893b25ab7e77ee6098fe3ef10585df660e5ffe67e632a8c5b9e4')
 
 build() {
 	:
