@@ -3,7 +3,7 @@
 
 _appname=cocos2d-x
 pkgname=cocos2d-x-src
-pkgver=3.15
+pkgver=3.15.1
 pkgrel=2
 pkgdesc="Cocos2D-X is a game engine that supports multiple platforms such as iOS, Android, WinXP/7/8, WP8, BlackBerry, MeeGo, Marmelade, WebOS, Mac OS X"
 arch=('i686' 'x86_64')
@@ -60,9 +60,11 @@ source=(
 "ccShader_Position_uColor.frag.patch"
 "ccShader_Position_uColor.vert.patch"
 "ccShader_UI_Gray.frag.patch"
+"CCPhysicsWorld.cpp.patch"
+"ProcessCpuTracker.cpp.patch"
 )
 sha256sums=(
-'5296091bf87d894475d2bbde39d2081612aea9ee855a91968e7523fbc6c84a5f'
+'36299ecc61d95bcb9cbfbaac4410be395aeb61c161b682e5576495b8e2a923f8'
 '09248ad9af9a94579b56c7c7dbf1b4276a59852c90423ad70c48b16355f28574'
 'f2f74a36538c43045894bd2b2415a2396bcb5c28f9241296b0e6d39a452b56b1'
 '3a7ae492fe9b2d7db8ef15c2d47e147746823942943e099d5a494c7076b2e92b'
@@ -109,6 +111,8 @@ sha256sums=(
 'db37cb1c64fc1990e26da2cc1d7a7756d50c2059a24c5d0d29757275850ace4d'
 '5394b03f78a25d6736171c792b384b6abdb20e80647cbf5220c55729eb9a2650'
 'c4cb76c3d896e66391453173f30417f8646257c1d702ee5a3cb3e4980f3df000'
+'3e7d0bf050e877fd94f18589562fd5b5af6a170cc7d2a92b24274492ed4623cb'
+'fa7aa811f6cc248dbdb04eb876ecd8027e2ed52c4b4a4db664f1cfa5e46393eb'
 )
 
 
@@ -134,24 +138,10 @@ package() {
 	## Add CMake configuration flags to ease the configuratino of libcocos2d:
 	patch -s "$srcdir"/$_appname-$pkgver/templates/cpp-template-default/CMakeLists.txt CMakeLists.txt.patch
 
-	# TODO: Also add the following options to the CMakeLists.txt patch for disabling/enabling libraries
-		# Uncomment to disable compiling/linking the following:
-		#set(USE_CHIPMUNK OFF CACHE BOOL "Use chipmunk for physics library")
-		#set(USE_BOX2D ON CACHE BOOL "Use box2d for physics library")
-		#set(USE_BULLET OFF CACHE BOOL "Use bullet for physics3d library")
-		#set(USE_RECAST OFF CACHE BOOL "Use Recast for navigation mesh")
-		#set(USE_WEBP OFF CACHE BOOL "Use WebP codec")
-		#set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries")
-		#set(DEBUG_MODE OFF CACHE BOOL "Debug or release?")
-		#set(BUILD_EXTENSIONS OFF CACHE BOOL "Build extension library")
-		#set(BUILD_EDITOR_SPINE OFF CACHE BOOL "Build editor support for spine")
-		#set(BUILD_EDITOR_COCOSTUDIO OFF CACHE BOOL "Build editor support for cocostudio")
-		#set(BUILD_EDITOR_COCOSBUILDER OFF CACHE BOOL "Build editor support for cocosbuilder")
-		#set(BUILD_BOX2D OFF CACHE BOOL "Build box2d external without using it for physics library")
-		#set(USE_PREBUILT_LIBS OFF CACHE BOOL "Use prebuilt libraries in external directory")
-		#set(USE_SOURCES_EXTERNAL OFF CACHE BOOL "Use sources in external directory (automatically ON when USE_PREBUILT_LIBS is)")
+	# Patch ProcessCpuTracker.cpp to fix NDK v15 issue:
+	patch -s "$srcdir"/$_appname-$pkgver/cocos/platform/android/jni/ProcessCpuTracker.cpp ProcessCpuTracker.cpp.patch
 
-	# POSSIBLE FUTURE TODO: There is a memory leak patch currently out for Labels. Stay tuned to see if it's affected: https://github.com/cocos2d/cocos2d-x/pull/17670
+	# POSSIBLE FUTURE TODO: There is a memory leak patch currently out for Labels. Stay tuned: https://github.com/cocos2d/cocos2d-x/pull/17670
 
 	# Switch C++ multiline string literal to the STRINGIFY macro which uses less memory. See https://github.com/cocos2d/cocos2d-x/pull/16742
 	# TL;DR: For smoother development, using the C++ multiline string literal is convenient, however the STRINGIFY macro defined at ccShaders.cpp uses less memory.
@@ -196,6 +186,9 @@ package() {
 	patch -s "$srcdir"/$_appname-$pkgver/cocos/renderer/ccShader_Position_uColor.vert ccShader_Position_uColor.vert.patch 
 	patch -s "$srcdir"/$_appname-$pkgver/cocos/renderer/ccShader_UI_Gray.frag ccShader_UI_Gray.frag.patch 
 
+	# Fix for issue: https://github.com/cocos2d/cocos2d-x/pull/17875
+	patch -s "$srcdir"/$_appname-$pkgver/cocos/physics/CCPhysicsWorld.cpp CCPhysicsWorld.cpp.patch
+
 	# Engine tweaks that must be adjusted on a user basis -- must be enabled by the users. These change the behaviour of the engine in certain areas
 
 	# Disable antialiasing globally for higher performance in general.
@@ -233,17 +226,22 @@ package() {
 	# Necessary libfmod symbolic link
 	mkdir -p "$pkgdir/usr/lib"
 	if [[ $CARCH == "x86_64" ]]; then
-		mkdir -p "$pkgdir/usr/lib32"
 		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/64-bit/libfmod.so "$pkgdir/usr/lib/libfmod.so.6"
 		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/64-bit/libfmodL.so "$pkgdir/usr/lib/libfmodL.so.6"
-		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/32-bit/libfmod.so "$pkgdir/usr/lib32/libfmod.so.6"
-		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/32-bit/libfmodL.so "$pkgdir/usr/lib32/libfmodL.so.6"
 	else
 		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/32-bit/libfmod.so "$pkgdir/usr/lib/libfmod.so.6"
 		ln -sf /opt/cocos2d-x/external/linux-specific/fmod/prebuilt/32-bit/libfmodL.so "$pkgdir/usr/lib/libfmodL.so.6"
 	fi
 
-	# Update the file timestamps:
+	# TODO: For 3.16 and onwards, add an environment variable that when enabled generates the engine documentation to be included with the package
+
+	# TODO: Update the Arch Wiki Documentation with all these environment variables
+
+	# TODO: Add a shell function for easily updating and fixing sdkbox. Maybe we could include a shellscript with the package that does this
+	# Note: Keep filing bugs against the essential sdkbox plugins that do not work out of the box in Arch Linux
+
+
+	# Update the file timestamps -- otherwise the build system will keep recompiling everything always:
 	find "$srcdir"/$_appname-$pkgver -exec touch {} +
 
 	# Set sdkbox python interpreter to python2
