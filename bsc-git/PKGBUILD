@@ -1,0 +1,35 @@
+# Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+
+_gitname=bsc
+pkgname=${_gitname,,}-git
+pkgver=r11768.5cbe77fad
+pkgrel=1
+pkgdesc="Binance Smart Chain miner and command line tools"
+arch=('x86_64')
+url="https://github.com/binance-chain/bsc"
+license=('GPL')
+provides=('bsc')
+conflicts=('go-ethereum')
+depends=('go')
+source=("${pkgname}::git+$url")
+sha256sums=('SKIP')
+
+pkgver()
+{
+	cd "$srcdir/$pkgname"
+	( set -o pipefail
+	git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+		printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
+}
+
+
+build() {
+	cd "$srcdir/$pkgname"
+	make ${MAKEFLAGS} all 
+}
+
+package() {
+	mkdir -p "$pkgdir/usr/bin"
+	mv "$srcdir/$pkgname/build/bin/"* "$pkgdir/usr/bin"
+}
