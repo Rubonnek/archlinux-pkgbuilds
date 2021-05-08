@@ -1,15 +1,13 @@
 # Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
 
-pkgname=binance-chain-node-binary-bin
+pkgname=binance-chain-node-binary
 pkgver=0.8.2
 pkgrel=1
-pkgdesc="Binance Smart Chain node binaries (including miner and other command line tools)"
+pkgdesc="Binance Smart Chain daemon bnbchaind and bnbcli"
 arch=('x86_64')
-url="https://github.com/binance-chain/bsc"
-license=('GPL')
-provides=('bsc')
-conflicts=('go-ethereum')
-depends=('go')
+url="https://github.com/binance-chain/node-binary"
+license=('custom')
+provides=('bsc-chain-node-binary')
 source=(
 	"bnbchaind-linux.zip::https://github.com/binance-chain/node-binary/releases/download/v${pkgver}/bnbchaind-linux.zip"
 	"bnbcli-linux.zip::https://github.com/binance-chain/node-binary/releases/download/v${pkgver}/bnbcli-linux.zip"

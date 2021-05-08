@@ -2,9 +2,9 @@
 
 _gitname=bsc
 pkgname=${_gitname,,}-git
-pkgver=r11768.5cbe77fad
+pkgver=r11770.e3c241a04
 pkgrel=1
-pkgdesc="Binance Smart Chain miner and command line tools"
+pkgdesc="Binance Smart Chain node tools"
 arch=('x86_64')
 url="https://github.com/binance-chain/bsc"
 license=('GPL')
