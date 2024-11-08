@@ -1,0 +1,31 @@
+#Maintainer: Wilson E. Alvarez <wilson.e.alvarez1@gmail.com>
+pkgname="SLK_img2pixel"
+pkgver=1
+pkgrel=1
+pkgdesc="A tool for transforming images into pixel art"
+arch=('any')
+url="https://github.com/Captain4LK/SoftLK-tools"
+license=('CC0')
+depends=('sdl2')
+source=("git+$url")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/SoftLK-tools"
+	(
+		set -o pipefail
+		git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+			printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
+}
+
+build() {
+	cd "${srcdir}/SoftLK-tools/SLK_img2pixel"
+	sh linux.sh gui >Makefile
+	make $MAKEFLAGS
+}
+
+package() {
+	install -Dm755 "${srcdir}/SoftLK-tools/bin/SLK_img2pix" "$pkgdir/usr/bin/SLK_img2pix"
+	install -Dm755 "${srcdir}/SoftLK-tools/bin/SLK_img2pix_cmd" "$pkgdir/usr/bin/SLK_img2pix_cmd"
+}
