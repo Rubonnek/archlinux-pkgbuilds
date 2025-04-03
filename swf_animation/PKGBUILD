@@ -16,6 +16,5 @@ build() {
 }
 
 package() {
-	install -Dm755 "${srcdir}/${pkgname}-${pkgver}/target/release/render" "$pkgdir/usr/bin/render"
 	install -Dm755 "${srcdir}/${pkgname}-${pkgver}/target/release/swf_to_json" "$pkgdir/usr/bin/swf_to_json"
 }
