@@ -1,0 +1,30 @@
+#Maintainer: Wilson E. Alvarez <wilson.e.alvarez@rubonnek.com>
+_pkgname="ffdec"
+pkgname="${_pkgname}-bin"
+_gitname=jpexs-decompiler
+pkgver=22.0.2
+pkgrel=1
+pkgdesc="JPEXS Free Flash Decompiler"
+arch=('any')
+url="https://github.com/crashinvaders/${_gitname}"
+license=('GPL')
+depends=('jre8-openjdk')
+source=("https://github.com/jindrapetrik/${_gitname}/releases/download/version${pkgver}/${_pkgname}_${pkgver}.zip")
+sha256sums=('cbfe78d9d4134e29921f43c3d9f49a94c904ed5046d2d856cc83c0a1b130dfce')
+
+build() {
+	rm ${srcdir}/ffdec.bat
+	rm ${srcdir}/ffdec.exe
+	rm ${srcdir}/ffdec-cli.exe
+}
+
+package() {
+	mkdir -p "${pkgdir}/usr/share/java/"
+	cp -a "${srcdir}" "${pkgdir}/usr/share/java/${_pkgname}"
+
+	mkdir -p "${pkgdir}/usr/bin"
+	printf "#\!/bin/sh\nexec /usr/lib/jvm/java-8-openjdk/jre/bin/java -jar '/usr/share/java/${_pkgname}/${_pkgname}.jar'" >"${pkgdir}/usr/bin/${_pkgname}"
+	printf "#\!/bin/sh\nexec /usr/lib/jvm/java-8-openjdk/jre/bin/java -jar '/usr/share/java/${_pkgname}/${_pkgname}-cli.jar'" >"${pkgdir}/usr/bin/${_pkgname}-cli"
+	chmod 755 "${pkgdir}/usr/bin/${_pkgname}"
+	chmod 755 "${pkgdir}/usr/bin/${_pkgname}-cli"
+}
